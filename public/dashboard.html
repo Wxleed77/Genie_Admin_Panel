@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Genie Admin — Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-dot"></div>
+      <div>
+        <h1>Genie.pk Admin Panel <span id="whoami"></span></h1>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span id="productCount"></span>
+      <button class="btn-logout" id="logoutBtn">Log Out</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+      <!-- Add product form -->
+      <div class="card">
+        <h2>Add New Product</h2>
+        <form id="addForm">
+          <label for="title">Title</label>
+          <input type="text" id="title" required />
+
+          <label for="description">Description</label>
+          <textarea id="description"></textarea>
+
+          <label for="category">Category</label>
+          <select id="category" required>
+            <option value="Men">Men</option>
+            <option value="Women">Women</option>
+            <option value="Junior">Junior</option>
+          </select>
+
+          <label for="base_price">Base Price (PKR)</label>
+          <input type="number" id="base_price" min="0" step="0.01" required />
+
+          <label for="stock_quantity">Stock Quantity</label>
+          <input type="number" id="stock_quantity" min="0" step="1" required />
+
+          <button type="submit" class="btn-add">Add Product</button>
+          <div class="form-msg" id="addMsg"></div>
+        </form>
+      </div>
+
+      <!-- Product table -->
+      <div class="card">
+        <h2>Product Control Center</h2>
+        <div id="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Stock</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productBody"></tbody>
+          </table>
+          <div class="empty-state" id="emptyState" style="display:none;">No products yet — add one on the left.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
