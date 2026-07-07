@@ -42,7 +42,16 @@ app.get("/api/health", (req, res) => {
   res.json({ success: true, message: "Genie Admin Panel backend is running." });
 });
 
-app.listen(PORT, () => {
-  console.log(`\n🚀 Genie.pk Admin Panel backend running at http://localhost:${PORT}`);
-  console.log(`   Admin dashboard: http://localhost:${PORT}/login.html\n`);
+// Root route: send users to the admin login page
+app.get("/", (req, res) => {
+  res.redirect("/login.html");
 });
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 Genie.pk Admin Panel backend running at http://localhost:${PORT}`);
+    console.log(`   Admin dashboard: http://localhost:${PORT}/login.html\n`);
+  });
+}
+
+module.exports = app;
