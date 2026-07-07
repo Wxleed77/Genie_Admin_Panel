@@ -40,6 +40,13 @@ app.get("/api/health", (req, res) => {
   res.json({ success: true, message: "Genie Admin Panel backend is running." });
 });
 
+// Ensure the default admin account exists on startup
+try {
+  require("./database/seed");
+} catch (err) {
+  console.warn("Seeding skipped:", err.message);
+}
+
 // Root route: send users to the admin login page
 app.get("/", (req, res) => {
   res.redirect("/login.html");

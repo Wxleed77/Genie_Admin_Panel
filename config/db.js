@@ -12,11 +12,27 @@
 // -----------------------------------------------------------------------------
 
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
 
-const DB_FILE = path.join(__dirname, "..", "database", "genie.json");
+function getDbFilePath() {
+  if (process.env.DB_FILE_PATH) return process.env.DB_FILE_PATH;
+
+  if (process.env.VERCEL || process.env.NODE_ENV === "production") {
+    return path.join(os.tmpdir(), "genie-admin-panel", "genie.json");
+  }
+
+  return path.join(__dirname, "..", "database", "genie.json");
+}
+
+const DB_FILE = getDbFilePath();
+
+function ensureDbDir() {
+  fs.mkdirSync(path.dirname(DB_FILE), { recursive: true });
+}
 
 function loadRaw() {
+  ensureDbDir();
   if (!fs.existsSync(DB_FILE)) {
     const initial = { admins: [], products: [], nextAdminId: 1, nextProductId: 1 };
     fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2));
@@ -27,6 +43,7 @@ function loadRaw() {
 }
 
 function saveRaw(data) {
+  ensureDbDir();
   fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
 }
 
