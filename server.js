@@ -8,7 +8,7 @@ require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
-const session = require("express-session");
+const cookieSession = require("cookie-session");
 
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/products");
@@ -19,14 +19,12 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(
-  session({
+  cookieSession({
+    name: "genie_admin_session",
     secret: process.env.SESSION_SECRET || "dev_secret_change_me",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 4, // 4 hours
-    },
+    httpOnly: true,
+    sameSite: "lax",
+    maxAge: 1000 * 60 * 60 * 4, // 4 hours
   })
 );
 
