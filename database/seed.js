@@ -8,7 +8,8 @@
 
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
-const { admins, products } = require("../config/db");
+const { admins } = require("../models/admin");
+const { products } = require("../models/product");
 
 function seedAdmin() {
   const username = process.env.ADMIN_USERNAME || "admin";

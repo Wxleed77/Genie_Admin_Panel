@@ -8,7 +8,7 @@
 
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const { admins } = require("../config/db");
+const { admins } = require("../models/admin");
 
 const router = express.Router();
 
@@ -39,13 +39,9 @@ router.post("/login", (req, res) => {
 
 // POST /api/auth/logout
 router.post("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).json({ success: false, message: "Could not log out." });
-    }
-    res.clearCookie("connect.sid");
-    return res.json({ success: true, message: "Logged out." });
-  });
+  req.session = null;
+  res.clearCookie("genie_admin_session");
+  return res.json({ success: true, message: "Logged out." });
 });
 
 // GET /api/auth/status

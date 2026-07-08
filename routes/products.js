@@ -15,7 +15,7 @@
 // -----------------------------------------------------------------------------
 
 const express = require("express");
-const { products, VALID_CATEGORIES } = require("../config/db");
+const { products, VALID_CATEGORIES } = require("../models/product");
 const { requireAuth } = require("../middleware/auth");
 
 const router = express.Router();
